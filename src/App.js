@@ -232,10 +232,17 @@ function Temperature(props){
   )
 }
 function SummaryPage(props){
-  const temperature = props.temperature;
-  console.log(temperature)
+  const history = useHistory()
+  const OnClickGoBack = ()=>{
+    history.push('/')
+  }
+
   return(
+    
     <div>
+      <Typography component='h1' gutterBottom={true}>
+            Cast Your Vote
+      </Typography>
       <h1>Summary Page</h1>
       <div>
              <h3>Who is your favorite Candidate?</h3>
@@ -256,6 +263,24 @@ function SummaryPage(props){
       <div>
              <h3>What is your ideal room temperature?</h3>
       </div>
+      <Box m={9} />
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        startIcon={<DoneAllIcon />}
+      >
+        Cast your Votes
+      </Button>
+      <Box m={2} />
+      <Button
+        variant="contained"
+        color="primary"
+        size="medium"
+        onClick={OnClickGoBack}
+      >
+        goBack
+      </Button>
     </div>
 
   )
