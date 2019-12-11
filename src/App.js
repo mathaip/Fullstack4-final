@@ -62,6 +62,7 @@ export default function App() {
 }
 
 function AppBody(){
+  const [temperature, setTemperature] = React.useState(null)
   return(
     <Switch>
       <Route exact={true} path='/' render={()=> <LoginPage /> }/>
@@ -96,7 +97,8 @@ function LoginPage(){
 
   const onClickLogIn = () => {
     window.localStorage.setItem('username', username)
-    history.push('/')
+    history.push('/voting/3')
+
   }
   return(
     <div>
@@ -110,22 +112,25 @@ function LoginPage(){
           />
         </form>
         <Box m={1} />
-        <Button
-          disabled={!username}
-          variant='contained'
-          color='primary'
-          onClick={onClickLogIn}
-        >
-          Continue
-        </Button>
+          <Button
+            disabled={!username}
+            variant='contained'
+            color='primary'
+            onClick={onClickLogIn}
+            
+          >
+            Continue
+          </Button>
+
       </div>
 
   )
 }
 
 
-function Temperature(){
-  const [temperature, setTemperature] = React.useState();
+function Temperature(props){
+  const [temperature, setTemperature] = React.useState(null)
+  const history = useHistory()
   const useStyles = makeStyles(theme => ({
     root: {
       width: 300,
@@ -153,6 +158,14 @@ function Temperature(){
       label: '100°C',
     },
   ];
+
+  const onClickNext = () =>{
+    history.push('/voting/summary')
+  }
+  const onClickPrev = () =>{
+    history.goBack();
+  }
+  
   
   function valuetext(value) {
     setTemperature(value);
@@ -169,25 +182,63 @@ function Temperature(){
             Back to start
       </Link>
       <Typography id="discrete-slider-always" gutterBottom>
-        Temperature
+        <h2>
+          Temperature
+        </h2>
       </Typography>
+      <Box m={10} />
+
       <Slider
-        defaultValue={20}
+        defaultValue={null}
         getAriaValueText={valuetext}
         aria-labelledby="discrete-slider-always"
         step={1}
         valueLabelDisplay="on"
         marks={marks}
       />
+      <div>
+        <Grid containerspacing={1} alignContent='right'>
+
+          <Box m={1} />
+            <Button
+              disabled={!temperature}
+              variant='contained'
+              color='primary'
+              onClick={onClickNext}
+              
+            >
+              Next
+            </Button>
+        </Grid>    
+      </div>
+     
+
+      <div>
+      <Grid alignItems='left'>
+      <Box m={1} />
+          <Button
+            align
+            disabled={!temperature}
+            variant='contained'
+            color='primary'
+            onClick={onClickPrev}
+            
+          >
+            Previous
+          </Button>
+      </Grid>
+      </div>
     </div>
   )
 }
-function SummaryPage(){
+function SummaryPage(props){
+  const temperature = props.temperature;
+  console.log(temperature)
   return(
     <div>
       <h1>Summary Page</h1>
       <div>
-              
+             <h3>{temperature}</h3> 
       </div>
     </div>
 
