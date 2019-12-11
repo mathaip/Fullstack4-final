@@ -218,7 +218,7 @@ function Temperature(props){
       <Box m={1} />
           <Button
             align
-            disabled={!temperature}
+            disabled={temperature}
             variant='contained'
             color='primary'
             onClick={onClickPrev}
@@ -238,7 +238,23 @@ function SummaryPage(props){
     <div>
       <h1>Summary Page</h1>
       <div>
-             <h3>{temperature}</h3> 
+             <h3>Who is your favorite Candidate?</h3>
+      </div>
+      <Box m={9} />
+      <div>
+             <h3>How happy are you with the Current Progess?</h3>
+      </div>
+      <Box m={9} />
+      <div>
+             <h3>When is your Birthday?</h3>
+      </div>
+      <Box m={9} />
+      <div>
+             <h3>Which province do you reside in?</h3>
+      </div>
+      <Box m={9} />
+      <div>
+             <h3>What is your ideal room temperature?</h3>
       </div>
     </div>
 
