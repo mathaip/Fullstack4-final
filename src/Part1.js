@@ -132,8 +132,8 @@ function AppBody() {
 }
 
 function VotingPage() {
-  const [vote, setVote] = React.useState("");
-  const [vote2, setVote2] = React.useState("");
+  let [vote, setVote] = React.useState("");
+  let [vote2, setVote2] = React.useState("");
   const history = useHistory();
 
   const onClickVote = () => {
@@ -144,6 +144,7 @@ function VotingPage() {
     window.localStorage.setItem("vote2", vote2);
     history.push("/voting/1");
   };
+
   return (
     <div>
       <FormControl component="fieldset">
@@ -156,19 +157,19 @@ function VotingPage() {
           name="customized-radios"
         >
           <FormControlLabel
-            value="jonnybravo"
+            value={(vote = "jonnybravo")}
             control={<StyledRadio />}
             label="Jonny Bravo"
             checked={onClickVote}
           />
           <FormControlLabel
-            value="satoshinakamoto"
+            value={(vote = "satoshinakamoto")}
             control={<StyledRadio />}
             label="Satoshi Nakamoto"
             checked={onClickVote}
           />
           <FormControlLabel
-            value="thanos"
+            value={(vote = "thanos")}
             control={<StyledRadio />}
             label="Thanos"
             checked={onClickVote}
@@ -186,31 +187,31 @@ function VotingPage() {
           name="customized-radios"
         >
           <FormControlLabel
-            value="veryhappy"
+            value={(vote2 = "veryhappy")}
             control={<StyledRadio />}
             label="Very happy"
             checked={onClickVote2}
           />
           <FormControlLabel
-            value="somewhathappy"
+            value={(vote2 = "somewhathappy")}
             control={<StyledRadio />}
             label="Somewhat happy"
             checked={onClickVote2}
           />
           <FormControlLabel
-            value="neutral"
+            value={(vote2 = "neutral")}
             control={<StyledRadio />}
             label="Neutral"
             checked={onClickVote2}
           />
           <FormControlLabel
-            value="somewhatunhappy"
+            value={(vote2 = "somewhatunhappy")}
             control={<StyledRadio />}
             label="Somewhat unhappy"
             checked={onClickVote2}
           />
           <FormControlLabel
-            value="veryunhappy"
+            value={(vote2 = "veryunhappy")}
             control={<StyledRadio />}
             label="Very unhappy"
             checked={onClickVote2}
@@ -227,14 +228,11 @@ function VotingPage() {
       >
         Next
       </Button>
-      <Button
-        disabled={!vote || !vote2}
-        variant="contained"
-        color="primary"
-        //onClick={}
-      >
-        Previous
-      </Button>
+      <Typography align="center" color="primary">
+        <Link style={{ color: "inherit" }} to="/">
+          Previous
+        </Link>
+      </Typography>
     </div>
   );
 }
