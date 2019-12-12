@@ -37,7 +37,8 @@ import {
 } from "react-router-dom";
 
 import SummaryPage from "./components/summary";
-
+import TemperaturePage from "./components/temperature";
+import ResultsPage from "./components/results";
 import {
   DONATION_ADDRESS,
   PROVINCES,
@@ -63,18 +64,32 @@ export default function App() {
   );
 }
 
-
-function AppBody(){
-  const [temperature, setTemperature] = React.useState(null)
-  return(
+function AppBody() {
+  const [temperature, setTemperature] = React.useState(null);
+  return (
     <Switch>
-      <Route exact={true} path="/" render={() => <LoginPage />} />
-      <Route exact={true} path="/voting/3" render={() => <Temperature />} />
+      <Route
+        exact={true}
+        path="/voting/3"
+        render={() => (
+          <TemperaturePage
+            temperature={temperature}
+            setTemperature={setTemperature}
+          />
+        )}
+      />
+
+      <Route
+        exact={true}
+        path="/voting/results"
+        render={() => <ResultsPage />}
+      />
       <Route
         exact={true}
         path="/voting/summary"
         render={() => <SummaryPage />}
       />
+      <Route exact={true} path="/" render={() => <LoginPage />} />
     </Switch>
   );
 }
@@ -99,16 +114,15 @@ function LoginPage() {
   const history = useHistory();
 
   const onClickLogIn = () => {
-//     window.localStorage.setItem("username", username);
-//     history.push("/");
-//   };
-//   return (
-    
-    window.localStorage.setItem('username', username)
-    history.push('/voting/3')
+    //     window.localStorage.setItem("username", username);
+    //     history.push("/");
+    //   };
+    //   return (
 
-  }
-  return(
+    window.localStorage.setItem("username", username);
+    history.push("/voting/3");
+  };
+  return (
     <div>
       <Solution />
       <form noValidate autoComplete="off">
@@ -117,21 +131,17 @@ function LoginPage() {
           label="Username"
           value={username}
           onChange={event => setUsername(event.target.value)}
-          />
-        </form>
-        <Box m={1} />
-          <Button
-            disabled={!username}
-            variant='contained'
-            color='primary'
-            onClick={onClickLogIn}
-          >
-            Continue
-          </Button>
-
-      </div>
-
-  )
+        />
+      </form>
+      <Box m={1} />
+      <Button
+        disabled={!username}
+        variant="contained"
+        color="primary"
+        onClick={onClickLogIn}
+      >
+        Continue
+      </Button>
+    </div>
+  );
 }
-
-
