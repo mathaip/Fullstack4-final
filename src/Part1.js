@@ -217,6 +217,24 @@ function VotingPage() {
           />
         </RadioGroup>
       </FormControl>
+
+      <Box m={1} />
+      <Button
+        disabled={!vote || !vote2}
+        variant="contained"
+        color="primary"
+        //onClick={}
+      >
+        Next
+      </Button>
+      <Button
+        disabled={!vote || !vote2}
+        variant="contained"
+        color="primary"
+        //onClick={}
+      >
+        Previous
+      </Button>
     </div>
   );
 }
