@@ -8,7 +8,7 @@ import { typography } from "@material-ui/system";
 import { useHistory } from "react-router-dom";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 
-function SummaryPage(props) {
+function SummaryPage() {
   const [metamaskAddr, setMetamaskAddr] = React.useState("");
   const [savedUsername, setSavedUsername] = React.useState("");
 
