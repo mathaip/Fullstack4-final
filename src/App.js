@@ -21,6 +21,7 @@ import {
   useLocation,
   useHistory
 } from "react-router-dom";
+
 import { FirebaseDatabaseProvider } from "@react-firebase/database";
 
 import SummaryPage from "./components/summary";
@@ -66,7 +67,11 @@ function AppBody() {
           />
         )}
       />
-      <Route exact={true} path="/voting/2" render={() => <Part2 />} />
+      <Route
+        exact={true}
+        path="/voting/2"
+        render={() => <div> todo: part2 </div>}
+      />
       <Route
         exact={true}
         path="/voting/3"
@@ -80,7 +85,13 @@ function AppBody() {
       <Route
         exact={true}
         path="/voting/summary"
-        render={() => <SummaryPage temperature={temperature} />}
+        render={() => (
+          <SummaryPage
+            temperature={temperature}
+            candidate={candidate}
+            happiness={happiness}
+          />
+        )}
       />
       <Route
         exact={true}

@@ -58,6 +58,7 @@ function TemperaturePage(props) {
 
   const onClickNext = () => {
     history.push("/voting/summary");
+    window.localStorage.setItem("temperature", props.temperature);
   };
   const onClickPrev = () => {
     history.goBack();
