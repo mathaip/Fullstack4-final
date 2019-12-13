@@ -109,7 +109,7 @@ import {
             >
               Previous
             </Button>
-=======
+
 function TemperaturePage(props) {
   const history = useHistory();
   const useStyles = makeStyles(theme => ({
