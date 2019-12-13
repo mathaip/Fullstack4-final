@@ -2,6 +2,8 @@ import "./App.css";
 import React from "react";
 import firebase from "firebase";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -13,6 +15,16 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Select from "@material-ui/core/Select";
 import Slider from "@material-ui/core/Slider";
 import { makeStyles } from "@material-ui/core/styles";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import DoneAllIcon from "@material-ui/icons/DoneAll";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from "@material-ui/pickers";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { ethers } from "ethers";
@@ -25,6 +37,8 @@ import {
   useLocation,
   useHistory
 } from "react-router-dom";
+import sendTransaction from "./sendTransaction";
+
 
 import { FirebaseDatabaseProvider } from "@react-firebase/database";
 
@@ -45,6 +59,7 @@ const NETWORK = "goerli";
 
 export default function App() {
   return (
+
     <FirebaseDatabaseProvider>
       <BrowserRouter>
         <Switch>
@@ -62,6 +77,7 @@ export default function App() {
 }
 
 function AppBody() {
+
   const [temperature, setTemperature] = React.useState(null);
   const [candidate, setCandidate] = React.useState("");
   const [happiness, setHappiness] = React.useState("");
@@ -152,10 +168,6 @@ function LoginPage() {
   const history = useHistory();
 
   const onClickLogIn = () => {
-    //     window.localStorage.setItem("username", username);
-    //     history.push("/");
-    //   };
-    //   return (
 
     window.localStorage.setItem("username", username);
     history.push("/voting/1");
@@ -180,6 +192,102 @@ function LoginPage() {
       >
         Continue
       </Button>
+    </div>
+  );
+}
+
+function Temperature() {
+  const [temperature, setTemperature] = React.useState();
+  const useStyles = makeStyles(theme => ({
+    root: {
+      width: 300
+    },
+    margin: {
+      height: theme.spacing(3)
+    }
+  }));
+
+  const marks = [
+    {
+      value: 0,
+      label: "0°C"
+    },
+    {
+      value: 20,
+      label: "20°C"
+    },
+    {
+      value: 37,
+      label: "37°C"
+    },
+    {
+      value: 100,
+      label: "100°C"
+    }
+  ];
+
+  function valuetext(value) {
+    setTemperature(value);
+    return `${value}°C`;
+  }
+
+  function valueLabelFormat(value) {
+    return marks.findIndex(mark => mark.value === value) + 1;
+  }
+  const classes = useStyles();
+  return (
+    <div className={classes.margin}>
+      <Link to="/" component={RouterLink}>
+        Back to start
+      </Link>
+      <Typography id="discrete-slider-always" gutterBottom>
+        Temperature
+      </Typography>
+      <Slider
+        defaultValue={20}
+        getAriaValueText={valuetext}
+        aria-labelledby="discrete-slider-always"
+        step={1}
+        valueLabelDisplay="on"
+        marks={marks}
+      />
+    </div>
+  );
+}
+function SummaryPage() {
+  const [amountCandidate, setAmountCandidate] = React.useState("");
+  const [amountCharity, setAmountCharity] = React.useState("");
+  let addressCandidate = "0x5Dc6288b35E0807A3d6fEB89b3a2Ff4aB773168e";
+  let addressCharity = null;
+  const onClick = async () => {
+    await sendTransaction({
+      valueInEth: amountCandidate ? amountCandidate : amountCharity,
+      gas: 4200000,
+      destinationAddress: amountCandidate ? addressCandidate : addressCharity
+    });
+  };
+
+  return (
+    <div>
+      <h1>Summary Page</h1>
+
+      <Grid container={true} direction="column">
+        <TextField
+          label="Donate ETH to your candidate"
+          value={amountCandidate}
+          onChange={event => setAmountCandidate(event.target.value)}
+        />
+        <Box m={1} />
+        <TextField
+          label="Donate ETH to charity"
+          value={amountCharity}
+          onChange={event => setAmountCharity(event.target.value)}
+        />
+        <Box m={3} />
+        <Button onClick={onClick} variant="contained" color="primary">
+          Cast Votes
+        </Button>
+      </Grid>
     </div>
   );
 }
