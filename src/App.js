@@ -1,30 +1,15 @@
 import "./App.css";
 import React from "react";
 // import firebase from "firebase";
-import firebase from "./firebase";
 import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Select from "@material-ui/core/Select";
-import Slider from "@material-ui/core/Slider";
 import { makeStyles } from "@material-ui/core/styles";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import DoneAllIcon from "@material-ui/icons/DoneAll";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { ethers } from "ethers";
 import {
@@ -36,17 +21,12 @@ import {
   useLocation,
   useHistory
 } from "react-router-dom";
+import { FirebaseDatabaseProvider } from "@react-firebase/database";
 
 import SummaryPage from "./components/summary";
 import TemperaturePage from "./components/temperature";
 import ResultsPage from "./components/results";
-import { FirebaseDatabaseProvider } from "@react-firebase/database";
-import {
-  DONATION_ADDRESS,
-  PROVINCES,
-  CANDIDATE_NAME,
-  HAPPINESS_LABEL
-} from "./constants";
+import VotingPage from "./components/candidates";
 
 const NETWORK = "goerli";
 
@@ -70,8 +50,23 @@ export default function App() {
 
 function AppBody() {
   const [temperature, setTemperature] = React.useState(null);
+  const [candidate, setCandidate] = React.useState("");
+  const [happiness, setHappiness] = React.useState("");
   return (
     <Switch>
+      <Route
+        exact={true}
+        path="/voting/1"
+        render={() => (
+          <VotingPage
+            candidate={candidate}
+            setCandidate={setCandidate}
+            happiness={happiness}
+            setHappiness={setHappiness}
+          />
+        )}
+      />
+      <Route exact={true} path="/voting/2" render={() => <Part2 />} />
       <Route
         exact={true}
         path="/voting/3"
@@ -82,17 +77,15 @@ function AppBody() {
           />
         )}
       />
-
+      <Route
+        exact={true}
+        path="/voting/summary"
+        render={() => <SummaryPage temperature={temperature} />}
+      />
       <Route
         exact={true}
         path="/voting/results"
         render={() => <ResultsPage />}
-      />
-      <Route
-        exact={true}
-        path="/voting/summary"
-        render={() => <SummaryPage
-          temperature={temperature} />}
       />
       <Route exact={true} path="/" render={() => <LoginPage />} />
     </Switch>
