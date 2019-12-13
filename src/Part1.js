@@ -131,17 +131,25 @@ function AppBody() {
   );
 }
 
-function VotingPage() {
+function VotingPage(props) {
   let [vote, setVote] = React.useState("");
   let [vote2, setVote2] = React.useState("");
   const history = useHistory();
+  var ballot = null;
+  var ballot2 = null;
 
-  const onClickVote = () => {
-    window.localStorage.setItem("vote", vote);
+  const onClickVote = event => {
+    ballot = event.target.value;
+    vote = ballot;
+    setVote(vote);
+    window.localStorage.setItem("vote", ballot);
     history.push("/voting/1");
   };
-  const onClickVote2 = () => {
-    window.localStorage.setItem("vote2", vote2);
+  const onClickVote2 = event => {
+    ballot2 = event.target.value;
+    vote2 = ballot2;
+    setVote2(vote2);
+    window.localStorage.setItem("vote2", ballot2);
     history.push("/voting/1");
   };
 
@@ -153,23 +161,27 @@ function VotingPage() {
         </FormLabel>
         <RadioGroup
           defaultValue="jonnybravo"
-          aria-label="candidates"
+          aria-label="candidate"
           name="customized-radios"
         >
           <FormControlLabel
-            value={(vote = "jonnybravo")}
+            value="jonnybravo"
+            name="candidate"
             control={<StyledRadio />}
             label="Jonny Bravo"
-            checked={onClickVote}
+            checked={vote === "jonnybravo"}
+            onChange={onClickVote}
           />
           <FormControlLabel
-            value={(vote = "satoshinakamoto")}
+            value="satoshinakamoto"
+            name="candidate"
             control={<StyledRadio />}
             label="Satoshi Nakamoto"
             checked={onClickVote}
           />
           <FormControlLabel
-            value={(vote = "thanos")}
+            value="thanos"
+            name="candidate"
             control={<StyledRadio />}
             label="Thanos"
             checked={onClickVote}
@@ -187,31 +199,36 @@ function VotingPage() {
           name="customized-radios"
         >
           <FormControlLabel
-            value={(vote2 = "veryhappy")}
+            value="veryhappy"
+            name="moods"
             control={<StyledRadio />}
             label="Very happy"
             checked={onClickVote2}
           />
           <FormControlLabel
-            value={(vote2 = "somewhathappy")}
+            value="somewhathappy"
+            name="moods"
             control={<StyledRadio />}
             label="Somewhat happy"
             checked={onClickVote2}
           />
           <FormControlLabel
-            value={(vote2 = "neutral")}
+            value="neutral"
+            name="moods"
             control={<StyledRadio />}
             label="Neutral"
             checked={onClickVote2}
           />
           <FormControlLabel
-            value={(vote2 = "somewhatunhappy")}
+            value="somewhatunhappy"
+            name="moods"
             control={<StyledRadio />}
             label="Somewhat unhappy"
             checked={onClickVote2}
           />
           <FormControlLabel
-            value={(vote2 = "veryunhappy")}
+            value="veryunhappy"
+            name="moods"
             control={<StyledRadio />}
             label="Very unhappy"
             checked={onClickVote2}
