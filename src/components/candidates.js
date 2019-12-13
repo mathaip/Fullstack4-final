@@ -106,13 +106,13 @@ export default function VotingPage(props) {
   const onClickVote = event => {
     ballot = event.target.value;
     props.setCandidate(ballot);
-    window.localStorage.setItem("vote", ballot);
+    window.localStorage.setItem("candidate", ballot);
     history.push("/voting/1");
   };
   const onClickVote2 = event => {
     ballot2 = event.target.value;
     props.setHappiness(ballot2);
-    window.localStorage.setItem("vote2", ballot2);
+    window.localStorage.setItem("happiness", ballot2);
     history.push("/voting/1");
   };
 
@@ -135,18 +135,18 @@ export default function VotingPage(props) {
           onChange={onClickVote}
         >
           <FormControlLabel
-            value="jonnybravo"
+            value="johnny-bravo"
             name="candidate"
             control={<StyledRadio />}
-            label="Jonny Bravo"
-            checked={props.candidate === "jonnybravo"}
+            label="Johnny Bravo"
+            checked={props.candidate === "johnny-bravo"}
           />
           <FormControlLabel
-            value="satoshinakamoto"
+            value="satoshi-nakamoto"
             name="candidate"
             control={<StyledRadio />}
             label="Satoshi Nakamoto"
-            checked={props.candidate === "satoshinakamoto"}
+            checked={props.candidate === "satoshi-nakamoto"}
           />
           <FormControlLabel
             value="thanos"
@@ -227,7 +227,7 @@ export default function VotingPage(props) {
           disabled={!props.candidate || !props.happiness}
           variant="contained"
           color="primary"
-          onClick={() => history.push("/voting/2")}
+          onClick={() => history.push("/voting/summary")}
         >
           Next
         </Button>

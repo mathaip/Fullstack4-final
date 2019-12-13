@@ -26,6 +26,8 @@ import {
   useHistory
 } from "react-router-dom";
 
+import { FirebaseDatabaseProvider } from "@react-firebase/database";
+
 import SummaryPage from "./components/summary";
 import TemperaturePage from "./components/temperature";
 import ResultsPage from "./components/results";
@@ -80,6 +82,7 @@ function AppBody() {
           />
         )}
       />
+
       <Route exact={true} path="/voting/2" render={() => <BirthdayPage
       setSelectedDate={setSelectedDate}
       selectedDate={selectedDate}
@@ -98,6 +101,18 @@ function AppBody() {
       />
       <Route
         exact={true}
+        path="/voting/summary"
+        render={() => (
+          <SummaryPage
+            temperature={temperature}
+            candidate={candidate}
+            happiness={happiness}
+          />
+        )}
+      />
+      <Route
+        exact={true}
+
         path="/voting/results"
         render={() => <ResultsPage />}
       />
