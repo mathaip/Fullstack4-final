@@ -1,9 +1,7 @@
 import "./App.css";
 import React from "react";
-// import firebase from "firebase";
-import firebase from "./firebase";
+import firebase from "firebase";
 import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -15,16 +13,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Select from "@material-ui/core/Select";
 import Slider from "@material-ui/core/Slider";
 import { makeStyles } from "@material-ui/core/styles";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import DoneAllIcon from "@material-ui/icons/DoneAll";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { ethers } from "ethers";
 import {
@@ -40,6 +29,8 @@ import {
 import SummaryPage from "./components/summary";
 import TemperaturePage from "./components/temperature";
 import ResultsPage from "./components/results";
+import VotingPage from "./components/candidates";
+import BirthdayPage from "./components/birthday";
 import { FirebaseDatabaseProvider } from "@react-firebase/database";
 import {
   DONATION_ADDRESS,
@@ -70,8 +61,31 @@ export default function App() {
 
 function AppBody() {
   const [temperature, setTemperature] = React.useState(null);
+  const [candidate, setCandidate] = React.useState("");
+  const [happiness, setHappiness] = React.useState("");
+  const [selectedDate, setSelectedDate] = React.useState(new Date([null]));
+  const [province, setProvince] = React.useState(null);
+
   return (
     <Switch>
+      <Route
+        exact={true}
+        path="/voting/1"
+        render={() => (
+          <VotingPage
+            candidate={candidate}
+            setCandidate={setCandidate}
+            happiness={happiness}
+            setHappiness={setHappiness}
+          />
+        )}
+      />
+      <Route exact={true} path="/voting/2" render={() => <BirthdayPage
+      setSelectedDate={setSelectedDate}
+      selectedDate={selectedDate}
+      province ={province}
+      setProvince={setProvince}
+      />} />
       <Route
         exact={true}
         path="/voting/3"
@@ -82,17 +96,21 @@ function AppBody() {
           />
         )}
       />
-
       <Route
         exact={true}
         path="/voting/results"
         render={() => <ResultsPage />}
       />
-      <Route
+    <Route
         exact={true}
         path="/voting/summary"
         render={() => <SummaryPage
-          temperature={temperature} />}
+          temperature={temperature}
+          candidate={candidate}
+          happiness={happiness}
+          province ={province}
+          selectedDate={selectedDate}
+           />}
       />
       <Route exact={true} path="/" render={() => <LoginPage />} />
     </Switch>
@@ -125,7 +143,7 @@ function LoginPage() {
     //   return (
 
     window.localStorage.setItem("username", username);
-    history.push("/voting/3");
+    history.push("/voting/1");
   };
   return (
     <div>
