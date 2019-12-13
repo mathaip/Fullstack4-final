@@ -1,33 +1,21 @@
-import "./App.css";
+import "../App.css";
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import firebase from "firebase";
-import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import Select from "@material-ui/core/Select";
-import Slider from "@material-ui/core/Slider";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 
-import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import DoneAllIcon from "@material-ui/icons/DoneAll";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import { ethers } from "ethers";
 import {
   BrowserRouter,
   Switch,
@@ -38,20 +26,19 @@ import {
   useHistory
 } from "react-router-dom";
 
-import {
-  DONATION_ADDRESS,
-  PROVINCES,
-  CANDIDATE_NAME,
-  HAPPINESS_LABEL
-} from "./constants";
-
-const NETWORK = "goerli";
-
 const useStyles = makeStyles({
   root: {
     "&:hover": {
       backgroundColor: "transparent"
     }
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  button: {
+    marginTop: 10,
+    marginLeft: 10
   },
   icon: {
     borderRadius: "50%",
@@ -92,164 +79,159 @@ const useStyles = makeStyles({
 });
 
 // Inspired by blueprintjs
-function StyledRadio(props) {
+
+export default function VotingPage(props) {
+  function StyledRadio(props) {
+    const classes = useStyles();
+    return (
+      <Radio
+        className={classes.root}
+        disableRipple
+        color="default"
+        checkedIcon={
+          <span className={clsx(classes.icon, classes.checkedIcon)} />
+        }
+        icon={<span className={classes.icon} />}
+        {...props}
+      />
+    );
+  }
+
   const classes = useStyles();
 
-  return (
-    <Radio
-      className={classes.root}
-      disableRipple
-      color="default"
-      checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-      icon={<span className={classes.icon} />}
-      {...props}
-    />
-  );
-}
-
-export default function App() {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <div className="App">
-            <div className="App-Content">
-              <AppBody />
-            </div>
-          </div>
-        </MuiPickersUtilsProvider>
-      </Switch>
-    </BrowserRouter>
-  );
-}
-
-function AppBody() {
-  return (
-    <Switch>
-      <Route exact={true} path="/voting/1" render={() => <VotingPage />} />
-    </Switch>
-  );
-}
-
-function VotingPage(props) {
-  let [vote, setVote] = React.useState("");
-  let [vote2, setVote2] = React.useState("");
   const history = useHistory();
   var ballot = null;
   var ballot2 = null;
 
   const onClickVote = event => {
     ballot = event.target.value;
-    vote = ballot;
-    setVote(vote);
-    window.localStorage.setItem("vote", ballot);
+    props.setCandidate(ballot);
+    window.localStorage.setItem("candidate", ballot);
     history.push("/voting/1");
   };
   const onClickVote2 = event => {
     ballot2 = event.target.value;
-    vote2 = ballot2;
-    setVote2(vote2);
-    window.localStorage.setItem("vote2", ballot2);
+    props.setHappiness(ballot2);
+    window.localStorage.setItem("happiness", ballot2);
     history.push("/voting/1");
   };
 
   return (
     <div>
+      <Typography variant="body1" display="block" gutterBottom>
+        Cast Your Vote
+      </Typography>
+      <Typography variant="h4" display="block" gutterBottom>
+        Part 1
+      </Typography>
       <FormControl component="fieldset">
         <FormLabel component="legend">
           Who is your favorite candidate?
         </FormLabel>
         <RadioGroup
-          defaultValue="jonnybravo"
+          value={props.candidate}
           aria-label="candidate"
           name="customized-radios"
+          onChange={onClickVote}
         >
           <FormControlLabel
-            value="jonnybravo"
+            value="johnny-bravo"
             name="candidate"
             control={<StyledRadio />}
-            label="Jonny Bravo"
-            checked={vote === "jonnybravo"}
-            onChange={onClickVote}
+            label="Johnny Bravo"
+            checked={props.candidate === "johnny-bravo"}
           />
           <FormControlLabel
-            value="satoshinakamoto"
+            value="satoshi-nakamoto"
             name="candidate"
             control={<StyledRadio />}
             label="Satoshi Nakamoto"
-            checked={onClickVote}
+            checked={props.candidate === "satoshi-nakamoto"}
           />
           <FormControlLabel
             value="thanos"
             name="candidate"
             control={<StyledRadio />}
             label="Thanos"
-            checked={onClickVote}
+            checked={props.candidate === "thanos"}
           />
         </RadioGroup>
       </FormControl>
+
+      <Box m={3} />
 
       <FormControl component="fieldset">
         <FormLabel component="legend">
           How happy are you with the current progress?
         </FormLabel>
         <RadioGroup
-          defaultValue="veryhappy"
+          value={props.happiness}
           aria-label="moods"
           name="customized-radios"
+          onChange={onClickVote2}
         >
           <FormControlLabel
             value="veryhappy"
             name="moods"
             control={<StyledRadio />}
             label="Very happy"
-            checked={onClickVote2}
+            checked={props.happiness === "veryhappy"}
           />
           <FormControlLabel
             value="somewhathappy"
             name="moods"
             control={<StyledRadio />}
             label="Somewhat happy"
-            checked={onClickVote2}
+            checked={props.happiness === "somewhathappy"}
           />
           <FormControlLabel
             value="neutral"
             name="moods"
             control={<StyledRadio />}
             label="Neutral"
-            checked={onClickVote2}
+            checked={props.happiness === "neutral"}
           />
           <FormControlLabel
             value="somewhatunhappy"
             name="moods"
             control={<StyledRadio />}
             label="Somewhat unhappy"
-            checked={onClickVote2}
+            checked={props.happiness === "somewhatunhappy"}
           />
           <FormControlLabel
             value="veryunhappy"
             name="moods"
             control={<StyledRadio />}
             label="Very unhappy"
-            checked={onClickVote2}
+            checked={props.happiness === "veryunhappy"}
           />
         </RadioGroup>
       </FormControl>
 
+      <Box m={2} />
+
+      <Divider />
+
       <Box m={1} />
-      <Button
-        disabled={!vote || !vote2}
-        variant="contained"
-        color="primary"
-        //onClick={}
-      >
-        Next
-      </Button>
-      <Typography align="center" color="primary">
-        <Link style={{ color: "inherit" }} to="/">
+      <div className={classes.buttons}>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          onClick={() => history.goBack()}
+        >
           Previous
-        </Link>
-      </Typography>
+        </Button>
+        <Button
+          className={classes.button}
+          disabled={!props.candidate || !props.happiness}
+          variant="contained"
+          color="primary"
+          onClick={() => history.push("/voting/summary")}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import React from "react";
 import firebase from "firebase";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -24,6 +25,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from "@material-ui/pickers";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { ethers } from "ethers";
 import {
@@ -36,6 +38,16 @@ import {
   useHistory
 } from "react-router-dom";
 import sendTransaction from "./sendTransaction";
+
+
+import { FirebaseDatabaseProvider } from "@react-firebase/database";
+
+import SummaryPage from "./components/summary";
+import TemperaturePage from "./components/temperature";
+import ResultsPage from "./components/results";
+import VotingPage from "./components/candidates";
+import BirthdayPage from "./components/birthday";
+import { FirebaseDatabaseProvider } from "@react-firebase/database";
 import {
   DONATION_ADDRESS,
   PROVINCES,
@@ -47,30 +59,91 @@ const NETWORK = "goerli";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <div className="App">
-            <div className="App-Content">
-              <AppBody />
+
+    <FirebaseDatabaseProvider>
+      <BrowserRouter>
+        <Switch>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <div className="App">
+              <div className="App-Content">
+                <AppBody />
+              </div>
             </div>
-          </div>
-        </MuiPickersUtilsProvider>
-      </Switch>
-    </BrowserRouter>
+          </MuiPickersUtilsProvider>
+        </Switch>
+      </BrowserRouter>
+    </FirebaseDatabaseProvider>
   );
 }
 
 function AppBody() {
+
+  const [temperature, setTemperature] = React.useState(null);
+  const [candidate, setCandidate] = React.useState("");
+  const [happiness, setHappiness] = React.useState("");
+  const [selectedDate, setSelectedDate] = React.useState(new Date([null]));
+  const [province, setProvince] = React.useState(null);
+
   return (
     <Switch>
-      <Route exact={true} path="/" render={() => <LoginPage />} />
-      <Route exact={true} path="/voting/3" render={() => <Temperature />} />
+      <Route
+        exact={true}
+        path="/voting/1"
+        render={() => (
+          <VotingPage
+            candidate={candidate}
+            setCandidate={setCandidate}
+            happiness={happiness}
+            setHappiness={setHappiness}
+          />
+        )}
+      />
+
+      <Route exact={true} path="/voting/2" render={() => <BirthdayPage
+      setSelectedDate={setSelectedDate}
+      selectedDate={selectedDate}
+      province ={province}
+      setProvince={setProvince}
+      />} />
+      <Route
+        exact={true}
+        path="/voting/3"
+        render={() => (
+          <TemperaturePage
+            temperature={temperature}
+            setTemperature={setTemperature}
+          />
+        )}
+      />
       <Route
         exact={true}
         path="/voting/summary"
-        render={() => <SummaryPage />}
+        render={() => (
+          <SummaryPage
+            temperature={temperature}
+            candidate={candidate}
+            happiness={happiness}
+          />
+        )}
       />
+      <Route
+        exact={true}
+
+        path="/voting/results"
+        render={() => <ResultsPage />}
+      />
+    <Route
+        exact={true}
+        path="/voting/summary"
+        render={() => <SummaryPage
+          temperature={temperature}
+          candidate={candidate}
+          happiness={happiness}
+          province ={province}
+          selectedDate={selectedDate}
+           />}
+      />
+      <Route exact={true} path="/" render={() => <LoginPage />} />
     </Switch>
   );
 }
@@ -95,8 +168,9 @@ function LoginPage() {
   const history = useHistory();
 
   const onClickLogIn = () => {
+
     window.localStorage.setItem("username", username);
-    history.push("/");
+    history.push("/voting/1");
   };
   return (
     <div>
