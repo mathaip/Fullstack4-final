@@ -13,6 +13,10 @@ function SummaryPage(props) {
   const [metamaskAddr, setMetamaskAddr] = React.useState("");
   const [savedUsername, setSavedUsername] = React.useState("");
   let temperature = props.temperature;
+  let birthday = props.selectedDate;
+  let candidate = props.candidate;
+  let happiness = props.happiness;
+  let province = props.province;
   let history = useHistory();
 
   function castVote() {
@@ -94,28 +98,28 @@ function SummaryPage(props) {
         Who is your favorite candidate?
       </Typography>
       <div className="summary-answers-text" display="block">
-        display props
+        {candidate}
       </div>
 
       <Typography variant="body2" display="block" gutterBottom>
         How happy are you with the current candidate?
       </Typography>
       <div className="summary-answers-text" display="block">
-        display props
+        {happiness}
       </div>
 
       <Typography variant="body2" display="block" gutterBottom>
         When is your birthday?
       </Typography>
       <div className="summary-answers-text" display="block">
-        display props
+        {birthday.toString('yyyy-mm-dd')}
       </div>
 
       <Typography variant="body2" display="block" gutterBottom>
         Which province do you reside in?
       </Typography>
       <div className="summary-answers-text" display="block">
-        display props
+        {province}
       </div>
 
       <Typography variant="body2" display="block" gutterBottom>

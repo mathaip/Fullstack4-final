@@ -8,23 +8,13 @@ import Link from "@material-ui/core/Link";
 import Slider from "@material-ui/core/Slider";
 import { makeStyles } from "@material-ui/core/styles";
 
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import DoneAllIcon from "@material-ui/icons/DoneAll";
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import { ethers } from "ethers";
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Redirect,
   Link as RouterLink,
-  useLocation,
   useHistory
 } from "react-router-dom";
+
+
+
 
 function TemperaturePage(props) {
   const history = useHistory();
