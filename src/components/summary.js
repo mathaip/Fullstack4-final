@@ -11,7 +11,7 @@ import DoneAllIcon from "@material-ui/icons/DoneAll";
 function SummaryPage(props) {
   const [metamaskAddr, setMetamaskAddr] = React.useState("");
   const [savedUsername, setSavedUsername] = React.useState("");
-
+  let temperature = props.temperature;
   let history = useHistory();
 
   const onClick = async () => {
@@ -72,7 +72,7 @@ function SummaryPage(props) {
         What is your ideal room temperature?
       </Typography>
       <div className="summary-answers-text" display="block">
-        display props
+         {temperature} °C
       </div>
       <Box m={1} />
       <TextField

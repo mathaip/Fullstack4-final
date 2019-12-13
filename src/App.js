@@ -87,7 +87,8 @@ function AppBody() {
       <Route
         exact={true}
         path="/voting/summary"
-        render={() => <SummaryPage />}
+        render={() => <SummaryPage
+          temperature={temperature} />}
       />
       <Route exact={true} path="/" render={() => <LoginPage />} />
     </Switch>
