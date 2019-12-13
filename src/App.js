@@ -1,6 +1,7 @@
 import "./App.css";
 import React from "react";
-import firebase from "firebase";
+// import firebase from "firebase";
+import firebase from "./firebase";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
@@ -39,6 +40,7 @@ import {
 import SummaryPage from "./components/summary";
 import TemperaturePage from "./components/temperature";
 import ResultsPage from "./components/results";
+import { FirebaseDatabaseProvider } from "@react-firebase/database";
 import {
   DONATION_ADDRESS,
   PROVINCES,
@@ -50,17 +52,19 @@ const NETWORK = "goerli";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <div className="App">
-            <div className="App-Content">
-              <AppBody />
+    <FirebaseDatabaseProvider>
+      <BrowserRouter>
+        <Switch>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <div className="App">
+              <div className="App-Content">
+                <AppBody />
+              </div>
             </div>
-          </div>
-        </MuiPickersUtilsProvider>
-      </Switch>
-    </BrowserRouter>
+          </MuiPickersUtilsProvider>
+        </Switch>
+      </BrowserRouter>
+    </FirebaseDatabaseProvider>
   );
 }
 
