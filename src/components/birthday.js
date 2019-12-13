@@ -45,7 +45,10 @@ import {
 
 function BirthdayPage(props){  
   const history = useHistory();
+<<<<<<< HEAD
 
+=======
+>>>>>>> mathai
   
   const onClickNext = () => {
     history.push("/voting/3");
