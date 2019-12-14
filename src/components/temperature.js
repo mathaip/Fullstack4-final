@@ -8,13 +8,8 @@ import Link from "@material-ui/core/Link";
 import Slider from "@material-ui/core/Slider";
 import { makeStyles } from "@material-ui/core/styles";
 
-import {
-  Link as RouterLink,
-  useHistory
-} from "react-router-dom";
-
-
-
+import { Link as RouterLink, useHistory } from "react-router-dom";
+import { Divider } from "@material-ui/core";
 
 function TemperaturePage(props) {
   const history = useHistory();
@@ -76,10 +71,13 @@ function TemperaturePage(props) {
         valueLabelDisplay="on"
         marks={marks}
       />
+      <Box m={2} />
+      <Divider />
       <div>
         <Grid containerspacing={1} alignContent="right">
           <Box m={1} />
           <Button
+            className="buttonR"
             disabled={!props.temperature}
             variant="contained"
             color="primary"
@@ -94,8 +92,8 @@ function TemperaturePage(props) {
         <Grid alignItems="left">
           <Box m={1} />
           <Button
+            className="buttonL"
             align
-            disabled={props.temperature}
             variant="contained"
             color="primary"
             onClick={onClickPrev}

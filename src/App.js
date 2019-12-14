@@ -62,7 +62,7 @@ function AppBody() {
   );
   const [candidate, setCandidate] = React.useState("");
   const [happiness, setHappiness] = React.useState("");
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [selectedDate, setSelectedDate] = React.useState("");
   const [province, setProvince] = React.useState(null);
 
   return (

@@ -19,11 +19,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { ethers } from "ethers";
 import {
@@ -98,7 +94,6 @@ function BirthdayPage(props) {
             id="date"
             label="Birthday"
             type="date"
-            defaultValue="2017-05-24"
             className={classes.textField}
             onChange={onChangeDate}
             InputLabelProps={{
@@ -120,8 +115,11 @@ function BirthdayPage(props) {
               <option key={provinces.code}> {provinces.name}</option>
             ))}
           </Select>
+          <Box m={3} />
+          <Divider />
         </FormControl>
         <Button
+          disabled={!props.province || !props.selectedDate}
           variant="contained"
           color="primary"
           className="Next"

@@ -27,38 +27,36 @@ function ResultsPage() {
         setHapinessFireBase(votesFirebase[2]);
         setProvinceFireBase(votesFirebase[3]);
         setTemperatureFireBase(votesFirebase[4]);
+        console.log(votesFirebase[1]);
       });
   }, []);
 
   return (
-    <Grid
-      container
-      direction="column"
-      justify="flex-start"
-      alignItems="flex-start"
-    >
+    <div>
       <Typography variant="body1" display="block" gutterBottom>
         Cast Your Vote
       </Typography>
       <Typography variant="h4" display="block" gutterBottom>
         Results
       </Typography>
-
-      <Candidates />
-      <Box m={4} />
-
-      <Progress />
-      <Box m={1} />
-
-      <AgeGroups />
-      <Box m={1} />
-
+      <div>
+        <Candidates />
+        <Box m={4} />
+      </div>
+      <div>
+        <Progress />
+        <Box m={1} />
+      </div>
+      <div>
+        <AgeGroups />
+        <Box m={1} />
+      </div>
       <Provinces />
       <Box m={1} />
 
       <Temperature />
       <Box m={1} />
-    </Grid>
+    </div>
   );
 
   function Progress() {
@@ -101,7 +99,11 @@ function ResultsPage() {
           Age groups:
         </Typography>
         <div className="results-answers-text" display="block">
-          display firebaseData
+          {Object.keys(birthdayFireBase).map(key => (
+            <div key={key}>
+              {[key]}: {birthdayFireBase[key]}
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -114,7 +116,11 @@ function ResultsPage() {
           Province:
         </Typography>
         <div className="results-answers-text" display="block">
-          display firebaseData
+          {Object.keys(provinceFireBase).map(key => (
+            <div key={key}>
+              {[key]}: {provinceFireBase[key]}
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -126,7 +132,11 @@ function ResultsPage() {
           Ideal room temperature:
         </Typography>
         <div className="results-answers-text" display="block">
-          display firebaseData
+          {Object.keys(temperatureFireBase).map(key => (
+            <div key={key}>
+              {[key]}ºC : {temperatureFireBase[key]}
+            </div>
+          ))}
         </div>
       </div>
     );
