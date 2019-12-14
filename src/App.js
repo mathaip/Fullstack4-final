@@ -58,12 +58,20 @@ export default function App() {
 
 function AppBody() {
   const [temperature, setTemperature] = React.useState(
-    window.localStorage.getItem("temperature")
+    window.localStorage.getItem("temperature") || "0"
   );
-  const [candidate, setCandidate] = React.useState("");
-  const [happiness, setHappiness] = React.useState("");
-  const [selectedDate, setSelectedDate] = React.useState("");
-  const [province, setProvince] = React.useState(null);
+  const [candidate, setCandidate] = React.useState(
+    window.localStorage.getItem("candidate") || ""
+  );
+  const [happiness, setHappiness] = React.useState(
+    window.localStorage.getItem("happiness") || ""
+  );
+  const [selectedDate, setSelectedDate] = React.useState(
+    window.localStorage.getItem("birthday") || ""
+  );
+  const [province, setProvince] = React.useState(
+    window.localStorage.getItem("province") || ""
+  );
 
   return (
     <Switch>

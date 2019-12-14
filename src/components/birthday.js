@@ -39,6 +39,7 @@ import {
 } from "../constants";
 
 function BirthdayPage(props) {
+  const [birthdayDate, setBirthdayDate] = React.useState("");
   const history = useHistory();
 
   const onClickNext = () => {
@@ -85,6 +86,7 @@ function BirthdayPage(props) {
   function onChangeDate(e) {
     let userAge = getAge(new Date(e.target.value));
     props.setSelectedDate(userAge);
+    setBirthdayDate(new Date(e.target.value));
   }
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>

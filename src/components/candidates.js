@@ -13,6 +13,7 @@ import Grid from "@material-ui/core/Grid";
 
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+import { CANDIDATE_NAME, HAPPINESS_LABEL } from "../constants";
 
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -214,9 +215,9 @@ export default function VotingPage(props) {
       <div>
         <Button
           className="buttonL"
+          disabled
           variant="contained"
           color="primary"
-          onClick={() => history.goBack()}
         >
           Previous
         </Button>

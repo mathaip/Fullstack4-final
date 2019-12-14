@@ -41,7 +41,7 @@ function ResultsPage() {
       </Typography>
       <div>
         <Candidates />
-        <Box m={4} />
+        <Box m={1} />
       </div>
       <div>
         <Progress />
@@ -62,10 +62,8 @@ function ResultsPage() {
   function Progress() {
     return (
       <div>
-        <Typography variant="body2" display="block" gutterBottom>
-          Progress:
-        </Typography>
-        <div className="results-answers-text" display="block">
+        Progress:
+        <div className="results-answers-text ">
           {Object.keys(hapinessFireBase).map(key => (
             <div key={key}>
               {[key]}: {hapinessFireBase[key]}
@@ -79,10 +77,8 @@ function ResultsPage() {
   function Candidates() {
     return (
       <div>
-        <Typography variant="body2" display="block" gutterBottom>
-          Favorite candidate:
-        </Typography>
-        <div className="results-answers-text" display="block">
+        Favorite candidate:
+        <div className="results-answers-text ">
           {Object.keys(candidatesFireBase).map(key => (
             <div key={key}>
               {CANDIDATE_NAME[key]}: {candidatesFireBase[key]}
@@ -95,10 +91,8 @@ function ResultsPage() {
   function AgeGroups() {
     return (
       <div>
-        <Typography variant="body2" display="block" gutterBottom>
-          Age groups:
-        </Typography>
-        <div className="results-answers-text" display="block">
+        Age groups:
+        <div className="results-answers-text ">
           {Object.keys(birthdayFireBase).map(key => (
             <div key={key}>
               {[key]}: {birthdayFireBase[key]}
@@ -112,10 +106,8 @@ function ResultsPage() {
   function Provinces() {
     return (
       <div>
-        <Typography variant="body2" display="block" gutterBottom>
-          Province:
-        </Typography>
-        <div className="results-answers-text" display="block">
+        Province:
+        <div className="results-answers-text ">
           {Object.keys(provinceFireBase).map(key => (
             <div key={key}>
               {[key]}: {provinceFireBase[key]}
@@ -128,10 +120,8 @@ function ResultsPage() {
   function Temperature() {
     return (
       <div>
-        <Typography variant="body2" display="block" gutterBottom>
-          Ideal room temperature:
-        </Typography>
-        <div className="results-answers-text" display="block">
+        Ideal room temperature:
+        <div className="results-answers-text ">
           {Object.keys(temperatureFireBase).map(key => (
             <div key={key}>
               {[key]}ºC : {temperatureFireBase[key]}
