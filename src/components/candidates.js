@@ -227,7 +227,7 @@ export default function VotingPage(props) {
           disabled={!props.candidate || !props.happiness}
           variant="contained"
           color="primary"
-          onClick={() => history.push("/voting/summary")}
+          onClick={() => history.push("/voting/2")}
         >
           Next
         </Button>

@@ -8,10 +8,14 @@ import { typography } from "@material-ui/system";
 import { useHistory } from "react-router-dom";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
 import firebase from "../firebase";
+import sendTransaction from "../sendTransaction";
 
 function SummaryPage(props) {
   const [metamaskAddr, setMetamaskAddr] = React.useState("");
   const [savedUsername, setSavedUsername] = React.useState("");
+  const [amountCandidate, setAmountCandidate] = React.useState("");
+  const [amountCharity, setAmountCharity] = React.useState("");
+
   let temperature = props.temperature;
   let birthday = props.selectedDate;
   let candidate = props.candidate;
@@ -20,6 +24,17 @@ function SummaryPage(props) {
   let history = useHistory();
 
   function castVote() {
+    let addressCandidate = "0x5Dc6288b35E0807A3d6fEB89b3a2Ff4aB773168e";
+    let addressCharity = null;
+    const onClick = async () => {
+      await sendTransaction({
+        valueInEth: amountCandidate ? amountCandidate : amountCharity,
+        gas: 4200000,
+        destinationAddress: amountCandidate ? addressCandidate : addressCharity
+      });
+      alert("ok");
+    };
+
     const db = firebase.firestore();
     const increment = firebase.firestore.FieldValue.increment(1);
     const batch = db.batch();
@@ -56,17 +71,6 @@ function SummaryPage(props) {
     batch.commit();
   }
 
-  //  db.collection("Results")
-  //   .onSnapshot(snapshot => {
-  //     let votesFirebase = snapshot.docs.map(doc => ({
-  //       ...doc.data()
-  //     }));
-  //     db.collection("Results").doc("Candidate")
-  //       .set(window.localStorage.getItem("vote")":"(votesFirebase[0][window.localStorage.getItem("vote")] + 1)
-  //     )
-
-  // });
-
   const onClick = async () => {
     try {
       castVote();
@@ -98,28 +102,28 @@ function SummaryPage(props) {
         Who is your favorite candidate?
       </Typography>
       <div className="summary-answers-text" display="block">
-        {candidate}
+        {window.localStorage.getItem("candidate")}
       </div>
 
       <Typography variant="body2" display="block" gutterBottom>
         How happy are you with the current candidate?
       </Typography>
       <div className="summary-answers-text" display="block">
-        {happiness}
+        {window.localStorage.getItem("happiness")}
       </div>
 
       <Typography variant="body2" display="block" gutterBottom>
         When is your birthday?
       </Typography>
       <div className="summary-answers-text" display="block">
-        {birthday.toString('yyyy-mm-dd')}
+        {window.localStorage.getItem("birthday")}
       </div>
 
       <Typography variant="body2" display="block" gutterBottom>
         Which province do you reside in?
       </Typography>
       <div className="summary-answers-text" display="block">
-        {province}
+        {window.localStorage.getItem("province")}
       </div>
 
       <Typography variant="body2" display="block" gutterBottom>
@@ -131,16 +135,20 @@ function SummaryPage(props) {
       <Box m={1} />
       <TextField
         className="textfield-donate"
-        id="outlined-basic"
+        label="Donate ETH to your candidate"
         variant="outlined"
         label="Donate ETH to your candidate (optional)"
+        value={amountCandidate}
+        onChange={event => setAmountCandidate(event.target.value)}
       />
       <Box m={1} />
       <TextField
         className="textfield-donate"
-        id="outlined-basic"
+        label="Donate ETH to charity"
         label="Donate ETH to charity (optional)"
         variant="outlined"
+        value={amountCharity}
+        onChange={event => setAmountCharity(event.target.value)}
       />
       <Box m={1} />
       <Grid container direction="column" alignItems="center">
