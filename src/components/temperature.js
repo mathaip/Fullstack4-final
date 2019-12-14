@@ -46,7 +46,7 @@ function TemperaturePage(props) {
     window.localStorage.setItem("temperature", props.temperature);
   };
   const onClickPrev = () => {
-    history.goBack();
+    history.push("/voting/2");
   };
 
   function valueLabelFormat(value) {
@@ -64,7 +64,7 @@ function TemperaturePage(props) {
       <Box m={10} />
 
       <Slider
-        defaultValue={null}
+        defaultValue={props.temperature}
         getAriaValueText={value => props.setTemperature(value)}
         aria-labelledby="discrete-slider-always"
         step={1}

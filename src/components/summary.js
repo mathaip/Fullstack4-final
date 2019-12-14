@@ -87,6 +87,7 @@ export default function SummaryPage(props) {
   const onClick = async () => {
     castVote();
     history.push("/voting/results");
+    window.localStorage.clear();
   };
 
   return (
@@ -120,7 +121,7 @@ export default function SummaryPage(props) {
         When is your birthday?
       </Typography>
       <div className="summary-answers-text" display="block">
-        {window.localStorage.getItem("birthday")}
+        {window.localStorage.getItem("birthday") + " "}years old
       </div>
 
       <Typography variant="body2" display="block" gutterBottom>
@@ -170,7 +171,7 @@ export default function SummaryPage(props) {
             type="button"
             onClick={() => history.push("/voting/3")}
           >
-            <Typography variant="button">back</Typography>
+            <Typography variant="button">Previous </Typography>
           </Button>
         </Grid>
       </Grid>
