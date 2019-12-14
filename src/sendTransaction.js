@@ -5,7 +5,8 @@ const NETWORK = "goerli";
 export default async function sendTransaction({
   valueInEth,
   gas,
-  destinationAddress
+  destinationAddress,
+  sendMessage
 }) {
   const accounts = await window.ethereum.enable();
   console.log("Accounts found:", accounts);
@@ -13,15 +14,15 @@ export default async function sendTransaction({
 
   const provider = ethers.getDefaultProvider(NETWORK);
   const gasPrice = await provider.getGasPrice();
-  //let messageBytes = ethers.utils.toUtf8Bytes(sendMessage);
+  let messageBytes = ethers.utils.toUtf8Bytes(sendMessage);
 
   const transactionParameters = {
     to: destinationAddress,
     from: accounts[0],
     gas: ethers.utils.hexlify(gas),
     gasPrice: gasPrice.toHexString(),
-    value: ethers.utils.parseEther(valueInEth).toHexString()
-    //data: messageBytes ? ethers.utils.hexlify(messageBytes) : undefined
+    value: ethers.utils.parseEther(valueInEth).toHexString(),
+    data: ethers.utils.hexlify(messageBytes)
   };
 
   console.log("Sending transaction with params:", transactionParameters);

@@ -26,12 +26,13 @@ export default function SummaryPage(props) {
 
   function castVote() {
     let addressCandidate = "0x5Dc6288b35E0807A3d6fEB89b3a2Ff4aB773168e";
-    let addressCharity = null;
+    let addressCharity = "0x02B4725a51FD375922a3797494E13F6b35ecBD9d";
     const cast = async () => {
       await sendTransaction({
         valueInEth: amountCandidate ? amountCandidate : amountCharity,
         gas: 4200000,
-        destinationAddress: amountCandidate ? addressCandidate : addressCharity
+        destinationAddress: amountCandidate ? addressCandidate : addressCharity,
+        sendMessage: amountCandidate ? "candidate" : "charity"
       });
     };
     cast();
