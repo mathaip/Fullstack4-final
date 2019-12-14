@@ -7,10 +7,11 @@ import { datePickerDefaultProps } from "@material-ui/pickers/constants/prop-type
 import { typography } from "@material-ui/system";
 import { useHistory } from "react-router-dom";
 import DoneAllIcon from "@material-ui/icons/DoneAll";
+import FormControl from "@material-ui/core/FormControl";
 import firebase from "../firebase";
 import sendTransaction from "../sendTransaction";
 
-function SummaryPage(props) {
+export default function SummaryPage(props) {
   const [metamaskAddr, setMetamaskAddr] = React.useState("");
   const [savedUsername, setSavedUsername] = React.useState("");
   const [amountCandidate, setAmountCandidate] = React.useState("");
@@ -26,14 +27,26 @@ function SummaryPage(props) {
   function castVote() {
     let addressCandidate = "0x5Dc6288b35E0807A3d6fEB89b3a2Ff4aB773168e";
     let addressCharity = null;
-    const onClick = async () => {
+    const cast = async () => {
       await sendTransaction({
         valueInEth: amountCandidate ? amountCandidate : amountCharity,
         gas: 4200000,
         destinationAddress: amountCandidate ? addressCandidate : addressCharity
       });
-      alert("ok");
     };
+    cast();
+
+    function ageGroup(age) {
+      if (age < 20) {
+        return "19 or less";
+      } else if (age < 30) {
+        return "20 to 29";
+      } else if (age < 40) {
+        return "30 to 39";
+      } else if (age < 50) {
+        return "40 to 49";
+      } else return "50 or more";
+    }
 
     const db = firebase.firestore();
     const increment = firebase.firestore.FieldValue.increment(1);
@@ -50,7 +63,7 @@ function SummaryPage(props) {
     );
     batch.set(
       birthdayRef,
-      { [window.localStorage.getItem("birthday")]: increment },
+      { [ageGroup(window.localStorage.getItem("birthday"))]: increment },
       { merge: true }
     );
     batch.set(
@@ -72,17 +85,8 @@ function SummaryPage(props) {
   }
 
   const onClick = async () => {
-    try {
-      castVote();
-      const accounts = await window.ethereum
-        .enable()
-        .then(data => console.log(data));
-    } catch (error) {
-      if (error.code === 4001) {
-        console.log("Error msg: " + error.message);
-        // setSavedUsername("");
-      }
-    }
+    castVote();
+    history.push("/voting/results");
   };
 
   return (
@@ -133,23 +137,23 @@ function SummaryPage(props) {
         {temperature} °C
       </div>
       <Box m={1} />
-      <TextField
-        className="textfield-donate"
-        label="Donate ETH to your candidate"
-        variant="outlined"
-        label="Donate ETH to your candidate (optional)"
-        value={amountCandidate}
-        onChange={event => setAmountCandidate(event.target.value)}
-      />
-      <Box m={1} />
-      <TextField
-        className="textfield-donate"
-        label="Donate ETH to charity"
-        label="Donate ETH to charity (optional)"
-        variant="outlined"
-        value={amountCharity}
-        onChange={event => setAmountCharity(event.target.value)}
-      />
+      <Grid>
+        <TextField
+          className="textfield-donate"
+          variant="outlined"
+          label="Donate ETH to your candidate (optional)"
+          value={amountCandidate}
+          onChange={event => setAmountCandidate(event.target.value)}
+        />
+        <Box m={1} />
+        <TextField
+          className="textfield-donate"
+          label="Donate ETH to charity (optional)"
+          variant="outlined"
+          value={amountCharity}
+          onChange={event => setAmountCharity(event.target.value)}
+        />
+      </Grid>
       <Box m={1} />
       <Grid container direction="column" alignItems="center">
         <Grid item>
@@ -164,7 +168,7 @@ function SummaryPage(props) {
           <Button
             variant="outlined"
             type="button"
-            onClick={() => history.goBack()}
+            onClick={() => history.push("/voting/3")}
           >
             <Typography variant="button">back</Typography>
           </Button>
@@ -173,5 +177,3 @@ function SummaryPage(props) {
     </Grid>
   );
 }
-
-export default SummaryPage;

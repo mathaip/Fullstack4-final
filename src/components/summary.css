@@ -1,5 +1,5 @@
 .textfield-donate {
-  width: 350px;
+  width: 100%;
   padding: 15px;
 }
 
@@ -9,4 +9,8 @@
   color: rgb(30, 80, 200);
   margin-bottom: 10px;
   height: 15px;
+}
+.form-control-donate {
+  width: 100%;
+  padding: 15px;
 }

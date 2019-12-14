@@ -9,6 +9,7 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
 
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -34,11 +35,8 @@ const useStyles = makeStyles({
   },
   buttons: {
     display: "flex",
-    justifyContent: "flex-end"
-  },
-  button: {
-    marginTop: 10,
-    marginLeft: 10
+    justifyContent: "flex-end",
+    justify: "space-around"
   },
   icon: {
     borderRadius: "50%",
@@ -107,13 +105,13 @@ export default function VotingPage(props) {
     ballot = event.target.value;
     props.setCandidate(ballot);
     window.localStorage.setItem("candidate", ballot);
-    history.push("/voting/1");
+    // history.push("/voting/1");
   };
   const onClickVote2 = event => {
     ballot2 = event.target.value;
     props.setHappiness(ballot2);
     window.localStorage.setItem("happiness", ballot2);
-    history.push("/voting/1");
+    // history.push("/voting/1");
   };
 
   return (
@@ -171,18 +169,18 @@ export default function VotingPage(props) {
           onChange={onClickVote2}
         >
           <FormControlLabel
-            value="veryhappy"
+            value="very happy"
             name="moods"
             control={<StyledRadio />}
             label="Very happy"
-            checked={props.happiness === "veryhappy"}
+            checked={props.happiness === "very happy"}
           />
           <FormControlLabel
-            value="somewhathappy"
+            value="somewhat happy"
             name="moods"
             control={<StyledRadio />}
             label="Somewhat happy"
-            checked={props.happiness === "somewhathappy"}
+            checked={props.happiness === "somewhat happy"}
           />
           <FormControlLabel
             value="neutral"
@@ -192,18 +190,18 @@ export default function VotingPage(props) {
             checked={props.happiness === "neutral"}
           />
           <FormControlLabel
-            value="somewhatunhappy"
+            value="somewhat unhappy"
             name="moods"
             control={<StyledRadio />}
             label="Somewhat unhappy"
-            checked={props.happiness === "somewhatunhappy"}
+            checked={props.happiness === "somewhat unhappy"}
           />
           <FormControlLabel
-            value="veryunhappy"
+            value="very unhappy"
             name="moods"
             control={<StyledRadio />}
             label="Very unhappy"
-            checked={props.happiness === "veryunhappy"}
+            checked={props.happiness === "very unhappy"}
           />
         </RadioGroup>
       </FormControl>
@@ -213,17 +211,19 @@ export default function VotingPage(props) {
       <Divider />
 
       <Box m={1} />
-      <div className={classes.buttons}>
+      <div>
         <Button
-          className={classes.button}
+          className="buttonL"
           variant="contained"
           color="primary"
           onClick={() => history.goBack()}
         >
           Previous
         </Button>
+      </div>
+      <div>
         <Button
-          className={classes.button}
+          className="buttonR"
           disabled={!props.candidate || !props.happiness}
           variant="contained"
           color="primary"

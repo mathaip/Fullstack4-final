@@ -25,3 +25,10 @@
 .AppHeader {
   border-bottom: 1px solid #ccc;
 }
+
+.buttonL {
+  float: left;
+}
+.buttonR {
+  float: right;
+}
